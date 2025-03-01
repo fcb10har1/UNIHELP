@@ -1,0 +1,82 @@
+import { useState } from "react";
+import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+export default function StudentWellnessApp() {
+  const [journalEntry, setJournalEntry] = useState("");
+  const [assignments, setAssignments] = useState([]);
+  const [newAssignment, setNewAssignment] = useState("");
+
+  const handleAddAssignment = () => {
+    if (newAssignment.trim()) {
+      setAssignments([...assignments, newAssignment]);
+      setNewAssignment("");
+    }
+  };
+
+  return (
+    <div className="p-6 min-h-screen bg-gray-100">
+      <div className="max-w-4xl mx-auto space-y-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Welcome to Student Wellness App</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>Manage your schedule, track your wellness, and stay on top of your tasks.</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Calendar</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Calendar className="w-full" />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Journal Entry</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Textarea
+              placeholder="Write about your day..."
+              value={journalEntry}
+              onChange={(e) => setJournalEntry(e.target.value)}
+              className="w-full"
+            />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Add Assignment</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Input
+              type="text"
+              placeholder="Enter assignment details"
+              value={newAssignment}
+              onChange={(e) => setNewAssignment(e.target.value)}
+              className="w-full"
+            />
+            <Button className="mt-2" onClick={handleAddAssignment}>
+              Add Assignment
+            </Button>
+            <ul className="mt-4 space-y-2">
+              {assignments.map((assignment, index) => (
+                <li key={index} className="p-2 bg-white rounded shadow">
+                  {assignment}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
